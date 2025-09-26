@@ -114,37 +114,40 @@ import xml.etree.ElementTree as etree
 url = "https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-PY0101EN-SkillsNetwork/labs/Module%205/data/Sample-employee-XML-file.xml"
 
 response = requests.get(url)    #download the file
+
 filename="Sample-employee-XML-file.xml"
 
 with open(filename, "wb") as f:     #Saves the file locally
         f.write(response.content)
 
-#new_data=pd.read_excel("Sample-employee-XML-file.xml")
-#tree = etree.parse("Sample-employee-XML-file.xml")
+tree = etree.parse("Sample-employee-XML-file.xml")
 
 # Get the root of the XML tree
-#root = tree.getroot()
+root = tree.getroot()
 
 # Define the columns for the DataFrame
-#columns = ["firstname", "lastname", "title", "division", "building", "room"]
+columns = ["firstname", "lastname", "title", "division", "building", "room"]
 
 # Initialize an empty DataFrame
-#datatframe = pd.DataFrame(columns=columns)
+datatframe = pd.DataFrame(columns=columns)
 
 #Iterate through each node in the XML root
-#for node in root:
+for node in root:
     # Extract text from each element
-    #firstname = node.find("firstname").text
-    #lastname = node.find("lastname").text
-    #title = node.find("title").text
-    #division = node.find("division").text
-    #building = node.find("building").text
-    #room = node.find("room").text
+    firstname = node.find("firstname").text
+    lastname = node.find("lastname").text
+    title = node.find("title").text
+    division = node.find("division").text
+    building = node.find("building").text
+    room = node.find("room").text
     
     # Create a DataFrame for the current row
-    #row_df = pd.DataFrame([[firstname, lastname, title, division, building, room]], columns=columns)
+    row_df = pd.DataFrame([[firstname, lastname, title, division, building, room]], columns=columns)
     
     # Concatenate with the existing DataFrame
-    #datatframe = pd.concat([datatframe, row_df], ignore_index=True)
+    datatframe = pd.concat([datatframe, row_df], ignore_index=True)
 
 #print(datatframe)
+
+#To save the dataframe to a csv file:
+#datatframe.to_csv("employee.csv", index=False)
